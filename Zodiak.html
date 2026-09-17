@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
+    <title>Kalkulator Zodiak</title>
+</head>
+
+<body class="bg-purple-50 text-gray-900">
+    <a href="landing_page.html"
+       class="absolute top-6 right-6 text-purple-600 hover:text-purple-800 transition">
+        ← Kembali ke Portfolio
+    </a>
+
+    <!-- HEADER -->
+    <header class="bg-white border-b border-purple-100">
+        <div class="max-w-3xl mx-auto px-6 py-6 text-center">
+            <h1 class="text-3xl font-bold text-purple-700">
+                Kalkulator Zodiak
+            </h1>
+
+            <p class="mt-2 text-gray-600">
+                Masukkan tanggal lahir untuk mengetahui zodiak kamu.
+            </p>
+        </div>
+    </header>
+
+
+    <!-- KALKULATOR -->
+    <main class="max-w-3xl mx-auto px-6 py-10">
+
+        <div class="bg-white rounded-xl border border-purple-100 p-6">
+
+            <!-- TANGGAL LAHIR -->
+            <div>
+                <label class="block text-sm font-medium mb-2">
+                    Tanggal Lahir
+                </label>
+
+                <input
+                    type="date"
+                    id="tanggalLahir"
+                    class="w-full px-4 py-3 border border-gray-300
+                           rounded-lg focus:outline-none
+                           focus:ring-2 focus:ring-purple-500"
+                >
+            </div>
+
+
+            <!-- TOMBOL -->
+            <div class="flex gap-4 mt-6">
+
+                <button
+                    id="hitung"
+                    class="px-6 py-3 bg-purple-600 text-white
+                           rounded-lg hover:bg-purple-700 transition"
+                >
+                    Cari Zodiak
+                </button>
+
+                <button
+                    id="reset"
+                    class="px-6 py-3 border border-purple-300
+                           text-purple-600 rounded-lg
+                           hover:bg-purple-50 transition"
+                >
+                    Reset
+                </button>
+
+            </div>
+
+
+            <!-- HASIL -->
+            <div
+                id="hasil"
+                class="hidden mt-8 bg-purple-50
+                       border border-purple-100 rounded-lg p-6"
+            >
+
+                <p class="text-sm font-medium text-purple-600">
+                    Hasil
+                </p>
+
+                <h2
+                    id="namaZodiak"
+                    class="text-2xl font-bold mt-2 text-purple-700"
+                >
+                </h2>
+
+                <div class="mt-4 space-y-2 text-gray-600">
+
+                    <p>
+                        <span class="font-semibold text-gray-900">
+                            Tanggal lahir:
+                        </span>
+
+                        <span id="tanggalHasil"></span>
+                    </p>
+
+                    <p>
+                        <span class="font-semibold text-gray-900">
+                            Periode:
+                        </span>
+
+                        <span id="periodeZodiak"></span>
+                    </p>
+
+                    <p>
+                        <span class="font-semibold text-gray-900">
+                            Elemen:
+                        </span>
+
+                        <span id="elemenZodiak"></span>
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <!-- NOTIFIKASI -->
+            <div
+                id="notif"
+                class="hidden mt-5 p-4 rounded-lg
+                       bg-red-50 text-red-600"
+            >
+            </div>
+
+        </div>
+
+
+        <!-- RUMUS / CARA KERJA -->
+        <div class="bg-white rounded-xl border border-purple-100
+                    p-6 mt-6">
+
+            <h2 class="text-xl font-bold">
+                Cara Menentukan Zodiak
+            </h2>
+
+            <p class="mt-3 text-gray-600 leading-relaxed">
+                Zodiak ditentukan berdasarkan tanggal dan bulan kelahiran.
+                JavaScript akan mengecek tanggal yang dimasukkan kemudian
+                menentukan zodiak yang sesuai.
+            </p>
+
+        </div>
+
+    </main>
+
+
+    <!-- JAVASCRIPT + JQUERY -->
+    <script>
+
+        $(document).ready(function () {
+
+            // Tombol Cari Zodiak
+            $("#hitung").click(function () {
+
+                let tanggal = $("#tanggalLahir").val();
+
+                // Validasi
+                if (tanggal === "") {
+
+                    $("#notif")
+                        .removeClass("hidden")
+                        .text("Silakan masukkan tanggal lahir terlebih dahulu.");
+
+                    $("#hasil").addClass("hidden");
+
+                    return;
+                }
+
+                // Mengambil tanggal
+                let tanggalObjek = new Date(tanggal);
+
+                let bulan = tanggalObjek.getMonth() + 1;
+                let hari = tanggalObjek.getDate();
+
+                let zodiak = "";
+                let periode = "";
+                let elemen = "";
+
+
+                // Menentukan zodiak
+                if ((bulan === 12 && hari >= 22) ||
+                    (bulan === 1 && hari <= 19)) {
+
+                    zodiak = "Capricorn";
+                    periode = "22 Desember – 19 Januari";
+                    elemen = "Tanah";
+
+                } else if ((bulan === 1 && hari >= 20) ||
+                           (bulan === 2 && hari <= 18)) {
+
+                    zodiak = "Aquarius";
+                    periode = "20 Januari – 18 Februari";
+                    elemen = "Udara";
+
+                } else if ((bulan === 2 && hari >= 19) ||
+                           (bulan === 3 && hari <= 20)) {
+
+                    zodiak = "Pisces";
+                    periode = "19 Februari – 20 Maret";
+                    elemen = "Air";
+
+                } else if ((bulan === 3 && hari >= 21) ||
+                           (bulan === 4 && hari <= 19)) {
+
+                    zodiak = "Aries";
+                    periode = "21 Maret – 19 April";
+                    elemen = "Api";
+
+                } else if ((bulan === 4 && hari >= 20) ||
+                           (bulan === 5 && hari <= 20)) {
+
+                    zodiak = "Taurus";
+                    periode = "20 April – 20 Mei";
+                    elemen = "Tanah";
+
+                } else if ((bulan === 5 && hari >= 21) ||
+                           (bulan === 6 && hari <= 20)) {
+
+                    zodiak = "Gemini";
+                    periode = "21 Mei – 20 Juni";
+                    elemen = "Udara";
+
+                } else if ((bulan === 6 && hari >= 21) ||
+                           (bulan === 7 && hari <= 22)) {
+
+                    zodiak = "Cancer";
+                    periode = "21 Juni – 22 Juli";
+                    elemen = "Air";
+
+                } else if ((bulan === 7 && hari >= 23) ||
+                           (bulan === 8 && hari <= 22)) {
+
+                    zodiak = "Leo";
+                    periode = "23 Juli – 22 Agustus";
+                    elemen = "Api";
+
+                } else if ((bulan === 8 && hari >= 23) ||
+                           (bulan === 9 && hari <= 22)) {
+
+                    zodiak = "Virgo";
+                    periode = "23 Agustus – 22 September";
+                    elemen = "Tanah";
+
+                } else if ((bulan === 9 && hari >= 23) ||
+                           (bulan === 10 && hari <= 22)) {
+
+                    zodiak = "Libra";
+                    periode = "23 September – 22 Oktober";
+                    elemen = "Udara";
+
+                } else if ((bulan === 10 && hari >= 23) ||
+                           (bulan === 11 && hari <= 21)) {
+
+                    zodiak = "Scorpio";
+                    periode = "23 Oktober – 21 November";
+                    elemen = "Air";
+
+                } else if ((bulan === 11 && hari >= 22) ||
+                           (bulan === 12 && hari <= 21)) {
+
+                    zodiak = "Sagittarius";
+                    periode = "22 November – 21 Desember";
+                    elemen = "Api";
+                }
+
+
+                // Menampilkan hasil
+                $("#namaZodiak").text(zodiak);
+                $("#periodeZodiak").text(periode);
+                $("#elemenZodiak").text(elemen);
+
+                $("#tanggalHasil").text(tanggal);
+
+                $("#hasil").removeClass("hidden");
+                $("#notif").addClass("hidden");
+
+            });
+
+
+            // Tombol Reset
+            $("#reset").click(function () {
+
+                $("#tanggalLahir").val("");
+
+                $("#namaZodiak").text("");
+                $("#tanggalHasil").text("");
+                $("#periodeZodiak").text("");
+                $("#elemenZodiak").text("");
+
+                $("#hasil").addClass("hidden");
+                $("#notif").addClass("hidden");
+
+            });
+
+        });
+
+    </script>
+
+</body>
+</html>
